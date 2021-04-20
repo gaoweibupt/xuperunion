@@ -22,12 +22,12 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	"github.com/xuperchain/xuperchain/core/common"
 	"github.com/xuperchain/xuperchain/core/contract"
 	"github.com/xuperchain/xuperchain/core/contract/bridge"
 	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	"github.com/xuperchain/xuperchain/core/global"
 	"github.com/xuperchain/xuperchain/core/kv/kvdb"
 	"github.com/xuperchain/xuperchain/core/ledger"

@@ -180,7 +180,7 @@ func (c *MultisigGenCommand) getMultiSignData(pubkeys [][]byte) (*MultisigData, 
 			return nil, err
 		}
 		klist = append(klist, ki)
-		pki, err := xcc.GetEcdsaPublicKeyFromJSON(pubkey)
+		pki, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(pubkey))
 		if err != nil {
 			return nil, err
 		}

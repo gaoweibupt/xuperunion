@@ -58,7 +58,7 @@ func (g *GenModBlockDescCommand) genDesc(ctx context.Context, txid string) error
 	if err != nil {
 		return err
 	}
-	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(fromScrkey))
+	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(fromScrkey)
 	if err != nil {
 		return err
 	}

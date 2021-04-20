@@ -16,6 +16,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	"github.com/xuperchain/xuperchain/core/common"
 	"github.com/xuperchain/xuperchain/core/common/config"
@@ -23,7 +24,6 @@ import (
 	bft "github.com/xuperchain/xuperchain/core/consensus/common/chainedbft"
 	bft_config "github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/config"
 	"github.com/xuperchain/xuperchain/core/contract"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	"github.com/xuperchain/xuperchain/core/ledger"
 	p2p_base "github.com/xuperchain/xuperchain/core/p2p/base"
 	"github.com/xuperchain/xuperchain/core/pb"
@@ -818,7 +818,7 @@ func (tp *TDpos) initBFT(cfg *config.NodeConfig) error {
 		tp.log.Warn("load private key error", "path", skpath)
 		return err
 	}
-	sk, err := tp.cryptoClient.GetEcdsaPrivateKeyFromJSON(skJSON)
+	sk, err := tp.cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(skJSON))
 	if err != nil {
 		tp.log.Warn("parse private key failed", "privateKey", skJSON)
 		return err

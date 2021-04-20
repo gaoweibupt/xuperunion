@@ -14,7 +14,7 @@ import (
 	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
 	"github.com/xuperchain/xuperchain/core/crypto/hash"
 	p2p_base "github.com/xuperchain/xuperchain/core/p2p/base"
-	"github.com/xuperchain/xuperchain/core/p2p/pb"
+	xuperp2p "github.com/xuperchain/xuperchain/core/p2p/pb"
 	"github.com/xuperchain/xuperchain/core/pb"
 )
 
@@ -55,7 +55,7 @@ func (p *P2PServerV2) handleGetAuthentication(ctx context.Context, msg *xuperp2p
 			return errRes, errors.New("handleGetAuthentication Create crypto client error")
 		}
 
-		publicKey, err := cryptoClient.GetEcdsaPublicKeyFromJSON(v.Pubkey)
+		publicKey, err := cryptoClient.GetEcdsaPublicKeyFromJsonStr(string(v.Pubkey))
 		if err != nil {
 			p.log.Error("handleGetAuthentication GetEcdsaPublicKeyFromJSON error", "error", err.Error())
 			return errRes, err

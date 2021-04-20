@@ -151,7 +151,7 @@ func GetAuthRequest(v *XchainAddrInfo) (*pb.IdentityAuth, error) {
 		return nil, errors.New("GetAuthRequest: Create crypto client error")
 	}
 
-	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJSON(v.Prikey)
+	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(v.Prikey))
 	if err != nil {
 		return nil, err
 	}

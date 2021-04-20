@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/xuperchain/xuperchain/core/crypto/account"
-	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
 	"log"
 	"os"
 	"strings"
+
+	"github.com/spf13/cobra"
+	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
+	"github.com/xuperchain/xuperchain/core/crypto/utils"
 )
 
 // AccountRestoreCommand restore account by mnemonic
@@ -77,22 +78,22 @@ func (c *AccountRestoreCommand) restoreAccount() error {
 		if strings.LastIndex(outputdir, "/") != len([]rune(outputdir))-1 {
 			outputdir = outputdir + "/"
 		}
-		err = account.WriteToFile(outputdir+"mnemonic", []byte(ecdsaAccount.Mnemonic))
+		err = utils.WriteToFile(outputdir+"mnemonic", []byte(ecdsaAccount.Mnemonic))
 		if err != nil {
 			log.Printf("Export mnemonic file failed, the err is %v", err)
 			return err
 		}
-		err = account.WriteToFile(outputdir+"private.key", []byte(ecdsaAccount.JSONPrivateKey))
+		err = utils.WriteToFile(outputdir+"private.key", []byte(ecdsaAccount.JsonPrivateKey))
 		if err != nil {
 			log.Printf("Export private key file failed, the err is %v", err)
 			return err
 		}
-		err = account.WriteToFile(outputdir+"public.key", []byte(ecdsaAccount.JSONPublicKey))
+		err = utils.WriteToFile(outputdir+"public.key", []byte(ecdsaAccount.JsonPublicKey))
 		if err != nil {
 			log.Printf("Export public key file failed, the err is %v", err)
 			return err
 		}
-		err = account.WriteToFile(outputdir+"address", []byte(ecdsaAccount.Address))
+		err = utils.WriteToFile(outputdir+"address", []byte(ecdsaAccount.Address))
 		if err != nil {
 			log.Printf("Export address file failed, the err is %v", err)
 			return err
@@ -100,8 +101,8 @@ func (c *AccountRestoreCommand) restoreAccount() error {
 		fmt.Printf("export account in : %s\n", outputdir)
 	} else {
 		fmt.Printf("address : %s\n", ecdsaAccount.Address)
-		fmt.Printf("privateKey : %s\n", ecdsaAccount.JSONPrivateKey)
-		fmt.Printf("publicKey : %s\n", ecdsaAccount.JSONPublicKey)
+		fmt.Printf("privateKey : %s\n", ecdsaAccount.JsonPrivateKey)
+		fmt.Printf("publicKey : %s\n", ecdsaAccount.JsonPublicKey)
 		fmt.Printf("mnemonic : %s\n", ecdsaAccount.Mnemonic)
 	}
 	return nil

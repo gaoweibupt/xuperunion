@@ -5,10 +5,10 @@ import (
 	"errors"
 	"sync"
 
+	"github.com/xuperchain/crypto/client/service/base"
+	"github.com/xuperchain/crypto/core/account"
+	"github.com/xuperchain/crypto/core/config"
 	"github.com/xuperchain/xuperchain/core/common"
-	"github.com/xuperchain/xuperchain/core/crypto/account"
-	"github.com/xuperchain/xuperchain/core/crypto/client/base"
-	"github.com/xuperchain/xuperchain/core/crypto/config"
 	"github.com/xuperchain/xuperchain/core/pluginmgr"
 )
 
@@ -124,14 +124,15 @@ func CreateCryptoClientFromJSONPrivateKey(jsonKey []byte) (base.CryptoClient, er
 
 // CreateCryptoClientFromMnemonic create CryptoClient by mnemonic
 func CreateCryptoClientFromMnemonic(mnemonic string, language int) (base.CryptoClient, error) {
-	isOld, cryptoByte, err := account.GetCryptoByteFromMnemonic(mnemonic, language)
+	// isOld, cryptoByte, err := account.GetCryptoByteFromMnemonic(mnemonic, language)
+	cryptoByte, err := account.GetCryptoByteFromMnemonic(mnemonic, language)
 	if err != nil {
 		return nil, err
 	}
 	// for old mnemonic, only Nist is supported
-	if isOld {
-		cryptoByte = config.Nist
-	}
+	// if isOld {
+	// 	cryptoByte = config.Nist
+	// }
 	cryptoType, err := getTypeByCryptoByte(cryptoByte)
 	if err != nil {
 		return nil, err
@@ -189,8 +190,8 @@ func getTypeByCryptoByte(cb uint8) (string, error) {
 		return CryptoTypeDefault, nil
 	case config.Gm:
 		return CryptoTypeGM, nil
-	case config.NistSN:
-		return CryptoTypeSchnorr, nil
+	// case config.NistSN:
+	// 	return CryptoTypeSchnorr, nil
 	default:
 		return "", errors.New("Unknown crypto byte")
 	}

@@ -86,7 +86,7 @@ func (c *MultisigSignCommand) sign() error {
 		if err != nil {
 			return err
 		}
-		priv, err := xcc.GetEcdsaPrivateKeyFromJSON([]byte(fromScrkey))
+		priv, err := xcc.GetEcdsaPrivateKeyFromJsonStr(fromScrkey)
 		if err != nil {
 			return err
 		}
@@ -175,7 +175,7 @@ func (c *MultisigSignCommand) findKfromKlist(msd *MultisigData, pubJSON []byte) 
 	if err != nil {
 		return nil, 0, err
 	}
-	pubkey, err := xcc.GetEcdsaPublicKeyFromJSON(pubJSON)
+	pubkey, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(pubJSON))
 	if err != nil {
 		return nil, 0, err
 	}
@@ -184,7 +184,7 @@ func (c *MultisigSignCommand) findKfromKlist(msd *MultisigData, pubJSON []byte) 
 		return nil, 0, err
 	}
 	for idx, ki := range msd.KList {
-		tmpkey, err := xcc.GetEcdsaPublicKeyFromJSON(msd.PubKeys[idx])
+		tmpkey, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(msd.PubKeys[idx]))
 		if err != nil {
 			continue
 		}

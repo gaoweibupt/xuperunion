@@ -3,6 +3,11 @@ set -e -x
 
 cd `dirname $0`/../../
 
+if [ ! -d "../crypto"];then
+        git clone https://github.com/xuperchain/crypto.git ../crypto
+fi
+
+
 # build wasm2c
 make -C core/xvm/compile/wabt -j 4
 cp core/xvm/compile/wabt/build/wasm2c ./
@@ -35,14 +40,14 @@ echo "## Build Plugins..."
 
 mkdir -p core/plugins/kv core/plugins/crypto core/plugins/consensus core/plugins/contract
 
-go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-default.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/xchain/plugin_impl
+#go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-default.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/xchain/plugin_impl
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" --tags multi -o core/plugins/kv/kv-ldb-multi.so.1.0.0 github.com/xuperchain/xuperchain/core/kv/kvdb/plugin-ldb
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" --tags single -o core/plugins/kv/kv-ldb-single.so.1.0.0 github.com/xuperchain/xuperchain/core/kv/kvdb/plugin-ldb
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" --tags cloud -o core/plugins/kv/kv-ldb-cloud.so.1.0.0 github.com/xuperchain/xuperchain/core/kv/kvdb/plugin-ldb
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/kv/kv-badger.so.1.0.0 github.com/xuperchain/xuperchain/core/kv/kvdb/plugin-badger
-go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-default.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/xchain/plugin_impl
-go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-schnorr.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/schnorr/plugin_impl
-go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-gm.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/gm/gmclient/plugin_impl
+#go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-default.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/xchain/plugin_impl
+#go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-schnorr.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/schnorr/plugin_impl
+#go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/crypto/crypto-gm.so.1.0.0 github.com/xuperchain/xuperchain/core/crypto/client/gm/gmclient/plugin_impl
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/consensus/consensus-pow.so.1.0.0 github.com/xuperchain/xuperchain/core/consensus/pow
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/consensus/consensus-single.so.1.0.0 github.com/xuperchain/xuperchain/core/consensus/single
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/consensus/consensus-tdpos.so.1.0.0 github.com/xuperchain/xuperchain/core/consensus/tdpos/main
@@ -51,6 +56,12 @@ go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/p
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/p2p/p2p-p2pv2.so.1.0.0 github.com/xuperchain/xuperchain/core/p2p/p2pv2/plugin_impl
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/xendorser/xendorser-default.so.1.0.0 github.com/xuperchain/xuperchain/core/server/xendorser/plugin-default
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/xendorser/xendorser-proxy.so.1.0.0 github.com/xuperchain/xuperchain/core/server/xendorser/plugin-proxy
+
+cd ../crypto
+go build --buildmode=plugin -o ./output/crypto-default.so.1.0.0 github.com/xuperchain/crypto/client/xchain/
+cd -
+cp ../crypto/output/crypto-default.so.1.0.0 core/plugins/crypto/crypto-default.so.1.0.0
+
 
 # build output dir
 mkdir -p output

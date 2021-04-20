@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	"github.com/xuperchain/xuperchain/core/crypto/hash"
 	"github.com/xuperchain/xuperchain/core/pb"
 )
@@ -163,7 +163,7 @@ func encodeTxData(tx *pb.Transaction, includeSigns bool) ([]byte, error) {
 
 // ProcessSignTx 签名Tx
 func ProcessSignTx(cryptoClient crypto_base.CryptoClient, tx *pb.Transaction, jsonSK []byte) ([]byte, error) {
-	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJSON(jsonSK)
+	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(jsonSK))
 	if err != nil {
 		return nil, err
 	}

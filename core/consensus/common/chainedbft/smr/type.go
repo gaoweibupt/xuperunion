@@ -4,11 +4,11 @@ import (
 	"crypto/ecdsa"
 	"sync"
 
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	cons_base "github.com/xuperchain/xuperchain/core/consensus/base"
 	"github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/config"
 	"github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/external"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	p2p_base "github.com/xuperchain/xuperchain/core/p2p/base"
 	xuper_p2p "github.com/xuperchain/xuperchain/core/p2p/pb"
 	pb "github.com/xuperchain/xuperchain/core/pb"

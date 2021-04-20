@@ -35,7 +35,7 @@ func TestPhaseMsgSign(t *testing.T) {
 			PublicKey: user.publicKey,
 		},
 	}
-	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(user.privateKey))
+	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(user.privateKey)
 	msg, err = MakePhaseMsgSign(cryptoClient, priKey, msg)
 	if err != nil {
 		t.Error("TestPhaseMsgSign MakePhaseMsgSign error", "error", err)
@@ -60,7 +60,7 @@ func TestVoteMsgSign(t *testing.T) {
 		t.Error("TestPhaseMsgSign CreateCryptoClient error ", "error", err)
 		return
 	}
-	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(user.privateKey))
+	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(user.privateKey)
 	msg := []byte("testmsg")
 	sig := &pb.SignInfo{
 		Address:   user.address,

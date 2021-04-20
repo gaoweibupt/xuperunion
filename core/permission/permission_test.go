@@ -20,7 +20,7 @@ func Test_IdentifyAK(t *testing.T) {
 		return
 	}
 
-	ecdsaPriKey, err := xcc.GetEcdsaPrivateKeyFromJSON([]byte(prikey))
+	ecdsaPriKey, err := xcc.GetEcdsaPrivateKeyFromJsonStr(prikey)
 	if err != nil {
 		t.Error("get private key failed, err=", err)
 		return

@@ -18,6 +18,7 @@ import (
 	"github.com/patrickmn/go-cache"
 	log "github.com/xuperchain/log15"
 
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	"github.com/xuperchain/xuperchain/core/common"
 	"github.com/xuperchain/xuperchain/core/common/config"
 	"github.com/xuperchain/xuperchain/core/common/events"
@@ -30,7 +31,6 @@ import (
 	"github.com/xuperchain/xuperchain/core/contract/proposal"
 	"github.com/xuperchain/xuperchain/core/crypto/account"
 	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	"github.com/xuperchain/xuperchain/core/global"
 	"github.com/xuperchain/xuperchain/core/kv/kvdb"
 	"github.com/xuperchain/xuperchain/core/ledger"
@@ -198,11 +198,11 @@ func (xc *XChainCore) Init(bcname string, xlog log.Logger, cfg *config.NodeConfi
 	}
 	xc.address = addr
 	xlog.Debug("Using address " + string(xc.address))
-	xc.privateKey, err = cryptoClient.GetEcdsaPrivateKeyFromJSON(pri)
+	xc.privateKey, err = cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(pri))
 	if err != nil {
 		return err
 	}
-	xc.publicKey, err = cryptoClient.GetEcdsaPublicKeyFromJSON(pub)
+	xc.publicKey, err = cryptoClient.GetEcdsaPublicKeyFromJsonStr(string(pub))
 	if err != nil {
 		return err
 	}
@@ -222,11 +222,11 @@ func (xc *XChainCore) Init(bcname string, xlog log.Logger, cfg *config.NodeConfi
 		return err
 	}
 
-	publicKeyStr, err := cryptoClient.GetEcdsaPublicKeyJSONFormat(xc.privateKey)
+	publicKeyStr, err := cryptoClient.GetEcdsaPublicKeyJsonFormatStr(xc.privateKey)
 	if err != nil {
 		return err
 	}
-	privateKeyStr, err := cryptoClient.GetEcdsaPrivateKeyJSONFormat(xc.privateKey)
+	privateKeyStr, err := cryptoClient.GetEcdsaPrivateKeyJsonFormatStr(xc.privateKey)
 	if err != nil {
 		return err
 	}

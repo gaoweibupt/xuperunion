@@ -34,7 +34,7 @@ func validUtxoAccess(in *pb.UtxoInput, bc *xchaincore.XChainCore, requestAmount 
 	if acl.IsAccount(account) == 1 || !needLock {
 		return true
 	}
-	publicKey, err := bc.CryptoClient.GetEcdsaPublicKeyFromJSON([]byte(in.Publickey))
+	publicKey, err := bc.CryptoClient.GetEcdsaPublicKeyFromJsonStr(in.Publickey)
 	if err != nil {
 		return false
 	}

@@ -249,7 +249,7 @@ func isEndorsorSignValid(signsValid []*pb.SignatureInfo, queryInfo *pb.CrossQuer
 	data := append(reqData[:], resData[:]...)
 	digest := hash.UsingSha256(data)
 	for idx := range signsValid {
-		pk, err := cryptoClient.GetEcdsaPublicKeyFromJSON([]byte(signsValid[idx].GetPublicKey()))
+		pk, err := cryptoClient.GetEcdsaPublicKeyFromJsonStr(signsValid[idx].GetPublicKey())
 		if err != nil {
 			log.Info("GetEcdsaPublicKeyFromJSON failed")
 			return false

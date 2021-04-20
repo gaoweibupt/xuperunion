@@ -291,7 +291,7 @@ func (dxe *DefaultXEndorser) signData(ctx context.Context, data []byte, keypath 
 		return nil, nil, err
 	}
 
-	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJSON(jsonSKey)
+	privateKey, err := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(jsonSKey))
 	if err != nil {
 		return nil, nil, err
 	}

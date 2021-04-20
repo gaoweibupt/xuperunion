@@ -62,7 +62,7 @@ func prepareBlockchain() *fakeBlockChainHolder {
 	// 准备账本
 	l, _ := ledger.NewLedger(workSpace, nil, nil, engine, crypto_client.CryptoTypeDefault)
 	cryptoClient, _ := crypto_client.CreateCryptoClient(crypto_client.CryptoTypeDefault)
-	privateKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(bobPrivateKey))
+	privateKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(bobPrivateKey)
 
 	t1 := &pb.Transaction{}
 	t1.TxOutputs = append(t1.TxOutputs, &pb.TxOutput{Amount: []byte("1000000000000"), ToAddr: []byte(bobAddress)})

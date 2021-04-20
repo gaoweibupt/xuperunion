@@ -16,9 +16,11 @@ XCHAIN_ROOT := ${PWD}/core
 export XCHAIN_ROOT
 PATH := ${PWD}/core/xvm/compile/wabt/build:$(PATH)
 
+
 build: build-release
 
 build-release:
+	git clone https://github.com/xuperchain/crypto.git ./../crypto
 	PLATFORM=$(PLATFORM) ./core/scripts/build.sh
 
 
@@ -42,5 +44,5 @@ clean:
 	rm -f dump_chain
 	rm -f event_client
 	rm -rf ./core/xvm/compile/wabt/build/
-
+	rm -rf ./../crypto
 .PHONY: all test clean

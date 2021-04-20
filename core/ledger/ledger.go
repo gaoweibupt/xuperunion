@@ -13,10 +13,10 @@ import (
 	"sync"
 
 	"github.com/golang/protobuf/proto"
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	"github.com/xuperchain/xuperchain/core/common"
 	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	"github.com/xuperchain/xuperchain/core/global"
 	"github.com/xuperchain/xuperchain/core/kv/kvdb"
 	"github.com/xuperchain/xuperchain/core/pb"
@@ -290,7 +290,7 @@ func (l *Ledger) formatBlock(txList []*pb.Transaction,
 	block.TargetBits = targetBits
 	block.Justify = qc
 	block.Height = blockHeight
-	jsPk, pkErr := l.cryptoClient.GetEcdsaPublicKeyJSONFormat(ecdsaPk)
+	jsPk, pkErr := l.cryptoClient.GetEcdsaPublicKeyJsonFormatStr(ecdsaPk)
 	if pkErr != nil {
 		return nil, pkErr
 	}
@@ -1213,7 +1213,7 @@ func (l *Ledger) VerifyBlock(block *pb.InternalBlock, logid string) (bool, error
 		return false, nil
 	}
 
-	k, err := l.cryptoClient.GetEcdsaPublicKeyFromJSON(block.Pubkey)
+	k, err := l.cryptoClient.GetEcdsaPublicKeyFromJsonStr(string(block.Pubkey))
 	if err != nil {
 		l.xlog.Warn("VerifyBlock get ecdsa from block error", "logid", logid, "error", err)
 		return false, nil

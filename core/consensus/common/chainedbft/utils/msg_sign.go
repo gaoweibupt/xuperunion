@@ -8,7 +8,7 @@ import (
 
 	"github.com/xuperchain/xuperchain/core/crypto/hash"
 
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	"github.com/xuperchain/xuperchain/core/pb"
 )
 
@@ -75,7 +75,7 @@ func VerifyPhaseMsgSign(cryptoClient crypto_base.CryptoClient, msg *pb.ChainedBf
 		return false, err
 	}
 
-	ak, err := cryptoClient.GetEcdsaPublicKeyFromJSON([]byte(msg.GetSignature().GetPublicKey()))
+	ak, err := cryptoClient.GetEcdsaPublicKeyFromJsonStr(msg.GetSignature().GetPublicKey())
 	if err != nil {
 		return false, err
 	}
@@ -104,7 +104,7 @@ func MakeVoteMsgSign(cryptoClient crypto_base.CryptoClient, privateKey *ecdsa.Pr
 
 // VerifyVoteMsgSign verify ChainedBftVoteMessage sign
 func VerifyVoteMsgSign(cryptoClient crypto_base.CryptoClient, sig *pb.SignInfo, msg []byte) (bool, error) {
-	ak, err := cryptoClient.GetEcdsaPublicKeyFromJSON([]byte(sig.GetPublicKey()))
+	ak, err := cryptoClient.GetEcdsaPublicKeyFromJsonStr(sig.GetPublicKey())
 	if err != nil {
 		return false, err
 	}

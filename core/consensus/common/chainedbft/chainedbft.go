@@ -4,12 +4,12 @@ package chainedbft
 import (
 	"crypto/ecdsa"
 
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	cons_base "github.com/xuperchain/xuperchain/core/consensus/base"
 	"github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/config"
 	"github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/external"
 	"github.com/xuperchain/xuperchain/core/consensus/common/chainedbft/smr"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	p2p_base "github.com/xuperchain/xuperchain/core/p2p/base"
 	"github.com/xuperchain/xuperchain/core/pb"
 )

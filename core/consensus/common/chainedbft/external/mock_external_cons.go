@@ -31,7 +31,7 @@ func (mec *MockExternalConsensus) CallPreQc(qc *pb.QuorumCert) (*pb.QuorumCert, 
 	if err != nil {
 		return nil, err
 	}
-	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(privateKey))
+	priKey, _ := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(privateKey)
 
 	signInfo, err = utils.MakeVoteMsgSign(cryptoClient, priKey, signInfo, preQc.GetProposalId())
 	if err != nil {

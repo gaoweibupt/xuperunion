@@ -165,7 +165,7 @@ func (uv *UtxoVM) verifySignatures(tx *pb.Transaction, digestHash []byte) (bool,
 		initiatorAddr := make([]string, 0)
 		// check initiator account signatures
 		for _, sign := range tx.InitiatorSigns {
-			ak, err := uv.cryptoClient.GetEcdsaPublicKeyFromJSON([]byte(sign.PublicKey))
+			ak, err := uv.cryptoClient.GetEcdsaPublicKeyFromJsonStr(sign.PublicKey)
 			if err != nil {
 				uv.xlog.Warn("verifySignatures failed", "address", tx.Initiator, "error", err)
 				return false, nil, err
@@ -234,7 +234,7 @@ func (uv *UtxoVM) verifyXuperSign(tx *pb.Transaction, digestHash []byte) (bool, 
 	}
 	pubkeys := make([]*ecdsa.PublicKey, 0)
 	for _, pubJSON := range tx.GetXuperSign().GetPublicKeys() {
-		pubkey, err := uv.cryptoClient.GetEcdsaPublicKeyFromJSON(pubJSON)
+		pubkey, err := uv.cryptoClient.GetEcdsaPublicKeyFromJsonStr(string(pubJSON))
 		if err != nil {
 			return false, nil, errors.New("XuperSign: found invalid public key")
 		}
@@ -247,7 +247,7 @@ func (uv *UtxoVM) verifyXuperSign(tx *pb.Transaction, digestHash []byte) (bool, 
 			return false, nil, errors.New("XuperSign: address and public key not match")
 		}
 	}
-	ok, err := uv.cryptoClient.XuperVerify(pubkeys, tx.GetXuperSign().GetSignature(), digestHash)
+	ok, err := uv.cryptoClient.VerifyMultiSig(pubkeys, tx.GetXuperSign().GetSignature(), digestHash)
 	if err != nil || !ok {
 		uv.xlog.Warn("XuperSign: signature verify failed", "error", err)
 		return false, nil, errors.New("XuperSign: address and public key not match")
@@ -608,7 +608,7 @@ func (uv *UtxoVM) verifyMarkedTx(tx *pb.Transaction) error {
 	if err != nil {
 		return err
 	}
-	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJSON(bytespk)
+	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(bytespk))
 	if err != nil {
 		return err
 	}

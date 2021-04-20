@@ -12,10 +12,10 @@ import (
 	"math/big"
 	"strconv"
 
+	crypto_base "github.com/xuperchain/crypto/client/service/base"
 	log "github.com/xuperchain/log15"
 	"github.com/xuperchain/xuperchain/core/common/config"
 	cons_base "github.com/xuperchain/xuperchain/core/consensus/base"
-	crypto_base "github.com/xuperchain/xuperchain/core/crypto/client/base"
 	"github.com/xuperchain/xuperchain/core/global"
 	"github.com/xuperchain/xuperchain/core/ledger"
 	"github.com/xuperchain/xuperchain/core/pb"
@@ -192,7 +192,7 @@ func (pc *PowConsensus) CheckMinerMatch(header *pb.Header, in *pb.InternalBlock)
 
 	//验证签名
 	//1 验证一下签名和公钥是不是能对上
-	k, err := pc.cryptoClient.GetEcdsaPublicKeyFromJSON(in.Pubkey)
+	k, err := pc.cryptoClient.GetEcdsaPublicKeyFromJsonStr(string(in.Pubkey))
 	if err != nil {
 		pc.log.Warn("get ecdsa from block error", "logid", header.Logid, "error", err)
 		return false, nil

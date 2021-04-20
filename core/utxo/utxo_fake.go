@@ -84,7 +84,7 @@ func (f *FakeUtxoVM) PlayForMiner(t *testing.T, txs []*pb.Transaction, preHash [
 	if err != nil {
 		return err
 	}
-	pk, _ := cryptoClient.GetEcdsaPrivateKeyFromJSON([]byte(f.Users[miner].PrivateKey))
+	pk, _ := cryptoClient.GetEcdsaPrivateKeyFromJsonStr(f.Users[miner].PrivateKey)
 	pendingBlock, err := f.L.FormatBlock(txs, []byte(f.Users[miner].Address), pk,
 		22121212, 0, 0, preHash, f.U.GetTotal())
 	if err != nil {

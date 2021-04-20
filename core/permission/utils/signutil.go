@@ -16,7 +16,7 @@ func VerifySign(ak string, si *pb.SignatureInfo, data []byte) (bool, error) {
 		return false, err
 	}
 
-	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJSON(bytespk)
+	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(bytespk))
 	if err != nil {
 		return false, err
 	}

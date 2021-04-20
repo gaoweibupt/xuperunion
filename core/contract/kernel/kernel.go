@@ -462,7 +462,7 @@ func (k *Kernel) validateUpdateBlockChainData(desc *contract.TxDesc) error {
 	if err != nil {
 		return err
 	}
-	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJSON(bytespk)
+	ecdsaKey, err := xcc.GetEcdsaPublicKeyFromJsonStr(string(bytespk))
 	if err != nil {
 		return err
 	}
