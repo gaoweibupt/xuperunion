@@ -58,7 +58,7 @@ go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/p
 go build --buildmode=plugin -gcflags "${XCHAIN_CUSTOME_BUILD_GCFLAGS}" -o core/plugins/xendorser/xendorser-proxy.so.1.0.0 github.com/xuperchain/xuperchain/core/server/xendorser/plugin-proxy
 
 cd ../crypto
-go build --buildmode=plugin -o ./output/crypto-default.so.1.0.0 github.com/xuperchain/crypto/client/xchain/
+go build --buildmode=plugin -o ./output/crypto-default.so.1.0.0 github.com/xuperchain/crypto/client/hdxchain/
 cd -
 cp ../crypto/output/crypto-default.so.1.0.0 core/plugins/crypto/crypto-default.so.1.0.0
 

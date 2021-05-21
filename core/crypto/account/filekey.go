@@ -451,11 +451,12 @@ func GetAccInfoFromFile(filename string) ([]byte, []byte, []byte, error) {
 		log.Printf("GetAccInfoFromFile error load pubkey error = %v", err)
 		return nil, nil, nil, err
 	}
-	prikey, err := ioutil.ReadFile(filename + "/private.key")
-	if err != nil {
-		log.Printf("GetAccInfoFromFile error load prikey error = %v", err)
-		return nil, nil, nil, err
-	}
+	prikey := []byte("")
+	// prikey, err := ioutil.ReadFile(filename + "/private.key")
+	// if err != nil {
+	// 	log.Printf("GetAccInfoFromFile error load prikey error = %v", err)
+	// 	return nil, nil, nil, err
+	// }
 	return addr, pubkey, prikey, err
 }
 

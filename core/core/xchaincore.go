@@ -29,7 +29,6 @@ import (
 	"github.com/xuperchain/xuperchain/core/contract/bridge"
 	"github.com/xuperchain/xuperchain/core/contract/kernel"
 	"github.com/xuperchain/xuperchain/core/contract/proposal"
-	"github.com/xuperchain/xuperchain/core/crypto/account"
 	crypto_client "github.com/xuperchain/xuperchain/core/crypto/client"
 	"github.com/xuperchain/xuperchain/core/global"
 	"github.com/xuperchain/xuperchain/core/kv/kvdb"
@@ -191,12 +190,36 @@ func (xc *XChainCore) Init(bcname string, xlog log.Logger, cfg *config.NodeConfi
 	keypath := cfg.Miner.Keypath
 
 	// this.address = utils.GetAddressFromPublicKey(1, this.publicKey)
-	addr, pub, pri, err := account.GetAccInfoFromFile(keypath)
+	priKey, err := cryptoClient.GetEcdsaPrivateKeyFromFile(keypath + "/private.key")
 	if err != nil {
-		xlog.Warn("load address and publickey and privatekey error", "path", keypath+"/address")
+		xlog.Warn("load privatekey error", "path", keypath, err)
 		return err
 	}
-	xc.address = addr
+	prikey, err := cryptoClient.GetEcdsaPrivateKeyJsonFormatStr(priKey)
+	if err != nil {
+		xlog.Warn("load privatekey error", "path", keypath, err)
+		return err
+	}
+	pubkey, err := cryptoClient.GetEcdsaPublicKeyJsonFormatStr(priKey)
+	if err != nil {
+		xlog.Warn("load publickey error", "path", keypath, err)
+		return err
+	}
+	pubKey, err := cryptoClient.GetEcdsaPublicKeyFromJsonStr(pubkey)
+	addr, err := cryptoClient.GetAddressFromPublicKey(pubKey)
+	if err != nil {
+		xlog.Warn("load address error", "path", keypath, err)
+		return err
+	}
+	pri := []byte(prikey)
+	pub := []byte(pubkey)
+
+	//addr, pub, pri, err := account.GetAccInfoFromFile(keypath)
+	//if err != nil {
+	//	xlog.Warn("load address and publickey and privatekey error", "path", keypath+"/address")
+	//	return err
+	//}
+	xc.address = []byte(addr)
 	xlog.Debug("Using address " + string(xc.address))
 	xc.privateKey, err = cryptoClient.GetEcdsaPrivateKeyFromJsonStr(string(pri))
 	if err != nil {

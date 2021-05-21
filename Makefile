@@ -1,3 +1,7 @@
+ARCH=arm64
+CROSS_COMPILE=arm-linux-gnueabihf-
+
+
 ifeq ($(OS),Windows_NT)
   PLATFORM="Windows"
 else
